@@ -21,6 +21,7 @@ namespace Workspaces {
         private Gtk.Label ws_label;
 
         public Panel (int cur_val) {
+            valign = Gtk.Align.CENTER;
             ws_label = new Gtk.Label ("%d".printf (cur_val + 1));
             ws_label.margin_bottom = 3;
             Gtk.Image ws_icon = new Gtk.Image.from_icon_name ("workspaces-symbolic", Gtk.IconSize.SMALL_TOOLBAR);

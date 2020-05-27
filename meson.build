@@ -4,7 +4,16 @@ project(
     version: '0.1.0'
 )
 
+gnome = import('gnome')
+
 wingpanel_dep = dependency('wingpanel-2.0')
+
+gresource = gnome.compile_resources(
+    'as-resources',
+    join_paths('data/' + meson.project_name() + '.gresource.xml'),
+    source_dir: 'data',
+    c_name: 'as'
+)
 
 shared_module(
     meson.project_name(),
@@ -12,6 +21,7 @@ shared_module(
     'src/Services/WorkspacesManager.vala',
     'src/Widgets/Panel.vala',
     'src/Widgets/Popover.vala',
+    gresource,
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),

@@ -30,6 +30,8 @@ namespace Workspaces {
             display_name : "Workspaces Indicator",
             description: "Manage your workspaces from the panel.");
 
+            Gtk.IconTheme.get_default().add_resource_path("/io/elementary/desktop/wingpanel/workspaces");
+
             close_popover = true;
 
             ws_manager = new Services.WorkspacesManager ();
