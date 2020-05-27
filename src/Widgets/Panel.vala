@@ -23,7 +23,7 @@ namespace Workspaces {
         public Panel (int cur_val) {
             ws_label = new Gtk.Label ("%d".printf (cur_val + 1));
             ws_label.margin_bottom = 3;
-            Gtk.Image ws_icon = new Gtk.Image.from_icon_name ("tv-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            Gtk.Image ws_icon = new Gtk.Image.from_icon_name ("workspaces-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
             attach (ws_icon, 0, 0, 1, 1);
             attach (ws_label, 0, 0, 1, 1);
         }
