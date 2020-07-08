@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Dirli <litandrej85@gmail.com>
+ * Copyright (c) 2018-2020 Dirli <litandrej85@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ namespace Workspaces {
 
         public Indicator () {
             Object (code_name : "workspaces-indicator",
-            display_name : "Workspaces Indicator",
-            description: "Manage your workspaces from the panel.");
+                    display_name : "Workspaces Indicator",
+                    description: "Manage your workspaces from the panel.");
 
             Gtk.IconTheme.get_default().add_resource_path("/io/elementary/desktop/wingpanel/workspaces");
 
@@ -59,6 +59,22 @@ namespace Workspaces {
         public override Gtk.Widget get_display_widget () {
             if (panel_label == null) {
                 panel_label = new Widgets.Panel (ws_manager.current_ws);
+                panel_label.scroll_event.connect ((e) => {
+                    if (e.direction != Gdk.ScrollDirection.LEFT && e.direction != Gdk.ScrollDirection.RIGHT) {
+
+                        int increment = e.direction == Gdk.ScrollDirection.UP ? -1 :
+                                        e.direction == Gdk.ScrollDirection.DOWN ? 1 :
+                                        0;
+
+                        int next_ws = ws_manager.current_ws + increment;
+                        if (increment != 0 && next_ws > -1 && next_ws <= ws_manager.ws_count) {
+                            DateTime now_dt = new DateTime.now_local ();
+                            ws_manager.screen.get_workspace (next_ws).activate ((uint32) now_dt.to_unix ());
+                        }
+                    }
+
+                    return true;
+                });
             }
 
             return panel_label;
@@ -73,8 +89,9 @@ namespace Workspaces {
         }
 
         private void on_changed_mode () {
-            DateTime now_dt = new DateTime.now_local();
-            ws_manager.screen.get_workspace(main_widget.ws_box.selected).activate ((uint32) now_dt.to_unix ());
+            DateTime now_dt = new DateTime.now_local ();
+            ws_manager.screen.get_workspace (main_widget.ws_box.selected).activate ((uint32) now_dt.to_unix ());
+            close ();
         }
 
         public override void opened () {
