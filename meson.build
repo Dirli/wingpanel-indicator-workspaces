@@ -1,10 +1,10 @@
-project(
+project (
     'workspaces',
     'vala', 'c',
     version: '1.0.0'
 )
 
-gnome = import('gnome')
+gnome = import ('gnome')
 
 wingpanel_dep = dependency ('wingpanel-2.0')
 

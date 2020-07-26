@@ -17,7 +17,6 @@
  */
 
 namespace Workspaces {
-
     public class Indicator : Wingpanel.Indicator {
         private Widgets.Popover? main_widget = null;
         private Widgets.Panel panel_label;
@@ -26,9 +25,7 @@ namespace Workspaces {
         private bool close_popover;
 
         public Indicator () {
-            Object (code_name : "workspaces-indicator",
-                    display_name : "Workspaces Indicator",
-                    description: "Manage your workspaces from the panel.");
+            Object (code_name : "workspaces-indicator");
 
             Gtk.IconTheme.get_default().add_resource_path("/io/elementary/desktop/wingpanel/workspaces");
 
