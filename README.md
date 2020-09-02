@@ -2,7 +2,7 @@
 
 Manage your dynamic workspaces from the panel.
 
-![Screenshot](data/screenshot1.png)  
+![Screenshot](data/screenshot1.png)
 
 ## Building and Installation
 
