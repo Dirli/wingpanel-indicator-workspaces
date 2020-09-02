@@ -59,8 +59,8 @@ namespace Workspaces {
                 panel_label.scroll_event.connect ((e) => {
                     if (e.direction != Gdk.ScrollDirection.LEFT && e.direction != Gdk.ScrollDirection.RIGHT) {
 
-                        int increment = e.direction == Gdk.ScrollDirection.UP ? -1 :
-                                        e.direction == Gdk.ScrollDirection.DOWN ? 1 :
+                        int increment = e.direction == Gdk.ScrollDirection.UP ? 1 :
+                                        e.direction == Gdk.ScrollDirection.DOWN ? -1 :
                                         0;
 
                         int next_ws = ws_manager.current_ws + increment;
