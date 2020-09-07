@@ -34,10 +34,12 @@ namespace Workspaces {
             ws_manager = new Services.WorkspacesManager ();
 
             ws_manager.screen.active_workspace_changed.connect (() => {
-                int cur_ws = ws_manager.current_ws;
-                panel_label.newval (cur_ws);
-                if (close_popover && main_widget != null) {
-                    main_widget.ws_box.selected = cur_ws;
+                int current_ws = ws_manager.current_ws;
+                if (current_ws > -1) {
+                    panel_label.newval (current_ws);
+                    if (close_popover && main_widget != null) {
+                        main_widget.ws_box.selected = current_ws;
+                    }
                 }
             });
 
@@ -54,10 +56,14 @@ namespace Workspaces {
                                         e.direction == Gdk.ScrollDirection.DOWN ? -1 :
                                         0;
 
-                        int next_ws = ws_manager.current_ws + increment;
-                        if (increment != 0 && next_ws > -1 && next_ws <= ws_manager.ws_count) {
-                            DateTime now_dt = new DateTime.now_local ();
-                            ws_manager.screen.get_workspace (next_ws).activate ((uint32) now_dt.to_unix ());
+                        var current_ws = ws_manager.current_ws;
+
+                        if (current_ws > -1) {
+                            int next_ws = current_ws + increment;
+                            if (increment != 0 && next_ws > -1 && next_ws < ws_manager.ws_count) {
+                                DateTime now_dt = new DateTime.now_local ();
+                                ws_manager.screen.get_workspace (next_ws).activate ((uint32) now_dt.to_unix ());
+                            }
                         }
                     }
 
@@ -70,7 +76,12 @@ namespace Workspaces {
 
         public override Gtk.Widget? get_widget () {
             if (main_widget == null) {
-                main_widget = new Widgets.Popover (ws_manager.current_ws, ws_manager.ws_count);
+                var current_ws = ws_manager.current_ws;
+                if (current_ws < 0) {
+                    return null;
+                }
+
+                main_widget = new Widgets.Popover (current_ws, ws_manager.ws_count);
 
                 ws_manager.screen.workspace_created.connect (() => {
                     main_widget.add_ws_btn (ws_manager.ws_count);

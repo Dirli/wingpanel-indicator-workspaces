@@ -22,7 +22,8 @@ namespace Workspaces {
 
         public int current_ws {
             get {
-                return screen.get_active_workspace ().get_number ();
+                unowned Wnck.Workspace ws = screen.get_active_workspace ();
+                return ws == null ? -1 : ws.get_number ();
             }
         }
 
