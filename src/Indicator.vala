@@ -32,15 +32,6 @@ namespace Workspaces {
             close_popover = true;
 
             ws_manager = new Services.WorkspacesManager ();
-            ws_manager.screen.workspace_created.connect (() => {
-                if (main_widget != null) {
-                    main_widget.add_ws_btn (ws_manager.ws_count);
-                }
-            });
-
-            ws_manager.screen.workspace_destroyed.connect ((space) => {
-                main_widget.remove_ws_btn (space.get_number ());
-            });
 
             ws_manager.screen.active_workspace_changed.connect (() => {
                 int cur_ws = ws_manager.current_ws;
@@ -80,6 +71,14 @@ namespace Workspaces {
         public override Gtk.Widget? get_widget () {
             if (main_widget == null) {
                 main_widget = new Widgets.Popover (ws_manager.current_ws, ws_manager.ws_count);
+
+                ws_manager.screen.workspace_created.connect (() => {
+                    main_widget.add_ws_btn (ws_manager.ws_count);
+                });
+
+                ws_manager.screen.workspace_destroyed.connect ((space) => {
+                    main_widget.remove_ws_btn (space.get_number ());
+                });
             }
 
             return main_widget;
