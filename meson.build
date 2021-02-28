@@ -6,7 +6,7 @@ project (
 
 gnome = import ('gnome')
 
-wingpanel_dep = dependency ('wingpanel-2.0')
+wingpanel_dep = dependency ('wingpanel')
 
 gresource = gnome.compile_resources (
     'as-resources',
