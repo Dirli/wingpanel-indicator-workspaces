@@ -1,3 +1,11 @@
+wingpanel-indicator-workspaces (3.0.0-1) bullseye; urgency=medium
+
+  * Added deb packaging files
+  * Fixed creating/deleting workspaces buttons
+  * Improved numbering of workspaces
+
+ -- dirli <litandrej85@gmail.com>  Sun, 25 Jul 2021 01:31:55 +0300
+
 wingpanel-indicator-workspaces (1.0.1-1) testing; urgency=medium
 
   * reverse scrolling (more intuitive)
