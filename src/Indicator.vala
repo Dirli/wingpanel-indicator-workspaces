@@ -50,17 +50,14 @@ namespace Workspaces {
             if (panel_label == null) {
                 panel_label = new Widgets.Panel (ws_manager.current_ws);
                 panel_label.scroll_event.connect ((e) => {
-                    if (e.direction != Gdk.ScrollDirection.LEFT && e.direction != Gdk.ScrollDirection.RIGHT) {
+                    double delta_x, delta_y;
+                    e.get_scroll_deltas (out delta_x, out delta_y);
 
-                        int increment = e.direction == Gdk.ScrollDirection.UP ? 1 :
-                                        e.direction == Gdk.ScrollDirection.DOWN ? -1 :
-                                        0;
-
+                    if (delta_y != 0 && delta_x == 0) {
                         var current_ws = ws_manager.current_ws;
-
                         if (current_ws > -1) {
-                            int next_ws = current_ws + increment;
-                            if (increment != 0 && next_ws > -1 && next_ws < ws_manager.ws_count) {
+                            int next_ws = current_ws - (int) delta_y;
+                            if (next_ws > -1 && next_ws < ws_manager.ws_count) {
                                 DateTime now_dt = new DateTime.now_local ();
                                 ws_manager.screen.get_workspace (next_ws).activate ((uint32) now_dt.to_unix ());
                             }
